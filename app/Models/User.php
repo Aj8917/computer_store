@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'mobile_no',
         'password',
     ];
 
@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // public function findForName($name)
+    // {
+    //     $this->where('name',$name)->first();
+    // }
 }
