@@ -63,7 +63,7 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-             'name'=>'name',
+            //'username'=>'mobile_no',
         ],
 
         // 'users' => [

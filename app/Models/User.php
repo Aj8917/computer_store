@@ -41,8 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    // public function findForName($name)
-    // {
-    //     $this->where('name',$name)->first();
-    // }
+    public function findForName($mobile_no)
+    {
+        $this->where('mobile_no',$mobile_no)->first();
+    }
 }

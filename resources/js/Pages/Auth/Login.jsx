@@ -9,7 +9,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        mobile_no: '',
         password: '',
         remember: '',
     });
@@ -38,15 +38,15 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="mobile_no" value="Mobile" />
+                    <InputLabel htmlFor="Mobile NO" value="Mobile NO" />
 
                     <TextInput
                         id="mobile_no"
-                        type="number"
+                        type="text"
                         name="mobile_no"
                         value={data.mobile_no}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="mobile_no"
                         isFocused={true}
                         onChange={handleOnChange}
                     />
@@ -88,7 +88,7 @@ export default function Login({ status, canResetPassword }) {
                     )}
 
                     <PrimaryButton className="ml-4" disabled={processing}>
-                        Log in
+                      Login
                     </PrimaryButton>
                 </div>
             </form>
