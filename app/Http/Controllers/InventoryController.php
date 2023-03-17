@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use app\Models\Stocks;
+use Inertia\Inertia;
+use App\Models\Stocks;
 
 class InventoryController extends Controller
 {
@@ -14,7 +15,7 @@ class InventoryController extends Controller
     public function index()
     {
         $stock=Stocks::all();
-        return Inertia::render('Pages/Inventory',['stocks'=>$stock]);
+        return Inertia::render('Inventory',['stocks'=>$stock]);
         //dd('ready ...');
     }
 

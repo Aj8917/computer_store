@@ -36,8 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/add_inventory',[InventoryController::class,'index'])->name('add_inventory');
-   
+    
+    Route::get('/add_inventory',[InventoryController::class,'index'])->name('add_inventory'); //to load table details
+    Route::post('/stock',[InventoryController::class,'store'])->name('stocks.create'); //to add item
+    Route::get('/stock',[InventoryController::class,'edit'])->name('stocks.edit');
+    Route::delete('/stock',[InventoryController::class,'destroy'])->name('stocks.destroy');
 });
 
 require __DIR__.'/auth.php';
