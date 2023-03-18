@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Stocks;
+use Illuminate\Support\Facades\Validator;
 
 class InventoryController extends Controller
 {
@@ -24,7 +25,7 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        //
+       return Inertia::render('Create');
     }
 
     /**
@@ -32,7 +33,18 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(),
+            [
+                'item_name'=>['required'],
+                'price'=>['required','numeric'],
+                'quantity'=>['required'],
+                'purchase_date'=>['required'],
+            ]
+        )->validate();
+
+        Stocks::create($request->all());
+        return redirect()->route('add_inventory');
+       // print_r($request->all());die();
     }
 
     /**
