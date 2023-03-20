@@ -58,24 +58,44 @@ class InventoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
+    public function edit(Stocks $id)
+{
+   // dd($id);
+    return Inertia::render('edit', ['stock' => $id]);
+
+}
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, Stocks $id)
+{
+    
+    Validator::make($request->all(), [
+        'item_name'=>['required'],
+        'price'=>['required','numeric'],
+        'quantity'=>['required'],
+        'purchase_date'=>['required'],
+    ])->validate();
+
+    $stock = Stocks::where('id', $id->id)->first();
+    // echo $request->id;
+    // dd($stock);
+    if ($stock) {
+        $stock->update($request->all());
     }
+    return redirect()->route('add_inventory');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+       Stocks::find($id)->delete();
+
+       return redirect()->route('add_inventory');
     }
 }

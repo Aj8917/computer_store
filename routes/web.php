@@ -17,9 +17,20 @@ use Inertia\Inertia;
 |
 */
 
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 Route::get('/', function () {
+    if (Route::has('login')) {
+        return redirect()->route('login');
+    }
+    // If the login route doesn't exist, render the Welcome page
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
@@ -40,8 +51,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/add_inventory',[InventoryController::class,'index'])->name('add_inventory'); //to load table details
     Route::get('/create',[InventoryController::class,'create'])->name('stocks.create'); //to render add item form 
     Route::post('/store',[InventoryController::class,'store'])->name('store');
-    Route::post('/edit',[InventoryController::class,'edit'])->name('stocks.edit');
-    Route::delete('/stock',[InventoryController::class,'destroy'])->name('stocks.destroy');
+    Route::get('/edit/{id}',[InventoryController::class,'edit'])->name('stocks.edit');
+    //Route::get('/stocks/edit/{id}', [InventoryController::class, 'edit'])->name('stocks.edit');
+
+    Route::put('/update/{id}', [InventoryController::class, 'update'])->name('update');
+
+    Route::delete('/destroy/{id}',[InventoryController::class,'destroy'])->name('stocks.destroy');
 });
 
 require __DIR__.'/auth.php';

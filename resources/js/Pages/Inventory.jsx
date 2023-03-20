@@ -52,7 +52,7 @@ export default function Inventory(props){
                                     <td className="border px-4 py-2">
                                         <Link tabIndex="1"  
                                          className="px-4 py-2 text-sm text-red bg-blue-500 rounded"
-                                        href={route("stocks.edit",[id=>id])}>
+                                        href={route("stocks.edit",id)}>
                                             Edit
                                         </Link>
                                         <button
@@ -89,7 +89,7 @@ export default function Inventory(props){
 
     function destroy(e)
     {
-        if(confirm("want to delet ?"))
+        if(confirm("want to Remove the Item ?"))
         {
             Inertia.delete(route("stocks.destroy",e.currentTarget.id));
         }
