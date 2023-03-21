@@ -15,7 +15,7 @@ class Bills extends Model
     {
         return $this->belongsTo(Stocks::class,'stock_id','id');
     }
-    public function MobleExists($mobile_no)
+    public function MobleExists($mobile_no) //to search the customer exists or not
     {
         $cust=Customers::where('mob_no',$mobile);
         if($cust)
@@ -23,7 +23,5 @@ class Bills extends Model
             return true;
         }
             return false;
-        
-
     }
 }
