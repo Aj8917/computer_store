@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,10 +54,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/store',[InventoryController::class,'store'])->name('store');
     Route::get('/edit/{id}',[InventoryController::class,'edit'])->name('stocks.edit');
     //Route::get('/stocks/edit/{id}', [InventoryController::class, 'edit'])->name('stocks.edit');
-
     Route::put('/update/{id}', [InventoryController::class, 'update'])->name('update');
-
     Route::delete('/destroy/{id}',[InventoryController::class,'destroy'])->name('stocks.destroy');
 });
 
+Route::middleware('auth')->group(function(){
+
+   
+    Route::get('/bills', [InvoiceController::class, 'index'])->name('bills');
+    Route::get('/generate_bill',[InvoiceController::class,'create'])->name('generate_bill');
+});
 require __DIR__.'/auth.php';
