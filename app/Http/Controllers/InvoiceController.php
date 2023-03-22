@@ -15,7 +15,8 @@ class InvoiceController extends Controller
     public function index()
     {
       //dd('test successfully');
-      $bills=Bills::all();
+      $bills=Bills::get_all();
+      //print_r($bills);die();
       return Inertia::render('Invoices',['result'=>$bills]);
     }
 
@@ -24,7 +25,9 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        $stock=Bills::Stock_all();
+        //print_r($stock);die();
+        return Inertia::render('generate_bill',['stocks'=>$stock]);
     }
 
     /**
@@ -64,6 +67,7 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Bills::where('bill_id',$id)->delete();
+        return redirect()->route('bills');
     }
 }

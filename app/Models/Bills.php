@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Stocks;
 use App\Models\Customers;
+use Illuminate\Support\Facades\DB;
 class Bills extends Model
 {
     use HasFactory;
@@ -23,5 +24,21 @@ class Bills extends Model
             return true;
         }
             return false;
+    }
+    public static  function get_all()
+    {
+        $data=DB::table('bills')
+                ->leftJoin('stocks','stocks.id','=','bills.stock_id')
+                ->select('bills.*','stocks.item_name')
+                ->get();
+                return $data;
+    }
+    public static function Stock_all()
+    {
+       // return Stocks::all();
+       $data=DB::table('Stocks')
+               ->select('id','item_name')
+               ->get();
+               return $data;
     }
 }

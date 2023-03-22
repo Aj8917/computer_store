@@ -63,5 +63,8 @@ Route::middleware('auth')->group(function(){
    
     Route::get('/bills', [InvoiceController::class, 'index'])->name('bills');
     Route::get('/generate_bill',[InvoiceController::class,'create'])->name('generate_bill');
+    Route::post('/bill.store',[InvoiceController::class,'store'])->name('add_bill');
+    Route::get('/bill.edit/{id}',[InvoiceController::class,'edit'])->name('bill.edit');
+    Route::delete('bill.destroy/{id}',[InvoiceController::class,'destroy'])->name('remove');
 });
 require __DIR__.'/auth.php';

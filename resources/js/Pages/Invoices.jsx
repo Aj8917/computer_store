@@ -5,7 +5,7 @@ import { Inertia } from "@inertiajs/inertia";
 export default function Invoices(props)
 {
     const {result} =usePage().props;
-
+    let srNO=1;
     return(
             <Authenticated 
                 auth={props.auth}
@@ -18,7 +18,7 @@ export default function Invoices(props)
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
                           <div className="flex items-center justify-between mb-6">
-                            <Link className="px-4 py-2 text-green bg-green-500 rounded"href={route("generate_bill")}> Create  Bill</Link>
+                            <Link className="px-4 py-2 text-green bg-purple-500 rounded"href={route("generate_bill")}> Create  Bill</Link>
                           </div>
                           <table className="table-fixed w-full">
                             <thead>
@@ -35,10 +35,26 @@ export default function Invoices(props)
                                 </tr>
                             </thead>
                             <tbody>
-                           
-                            <tr>
-                                
+                           {result.map(({bill_id,bill_no,created_at,item_name,quantity,price,cust_name,cust_mob_no})=>(
+                            <tr key={bill_id}>
+                              <td className="border px-4 py-2">{srNO++}</td>
+                              <td className="border px-4 py-2">{bill_no}</td>  
+                              <td className="border px-4 py-2">{created_at}</td>
+                              <td className="border px-4 py-2">{item_name}</td>  
+                               
+                              <td className="border px-4 py-2">{price}</td>  
+                              <td className="border px-4 py-2">{quantity}</td>
+                              <td className="border px-4 py-2">{cust_name}</td>  
+                              <td className="border px-4 py-2">{cust_mob_no}</td>  
+                              <td className="border px-4 py-2">
+                                <Link tabIndex="1" className="px-4 py-2 text-sm bg-green-300 rounded"href={route("bill.edit",bill_id)}> Edit
+                                </Link>
+                                <button tabIndex="-1" id={bill_id}  type="button"
+                                          className="mx-1 px-4 py-2 text-sm text-white bg-red-500 rounded" onClick={destroy}>Delete</button>
+                              </td>  
+                              
                             </tr>
+                            ))}
                             </tbody>
                             </table>
                         </div>
@@ -49,4 +65,11 @@ export default function Invoices(props)
 
             </Authenticated>
     );
+    function destroy(e)
+    {
+      if(confirm("Are Sure to remove Bill ?"))
+      {
+        Inertia.delete(route('remove',e.currentTarget.id));
+      }
+    }
 }//Invoices
