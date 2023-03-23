@@ -31,7 +31,7 @@ export default function Invoices(props)
                                     <th className="px-4 py-2">Quantity</th>
                                     <th className="px-4 py-2">Cutnomer Name</th>
                                     <th className="px-4 py-2">Cust. Mob</th>
-                                    <th className="px-4 py-2">Action</th>
+                                    <th className="px-4 py-2" colSpan="2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,8 +47,11 @@ export default function Invoices(props)
                               <td className="border px-4 py-2">{cust_name}</td>  
                               <td className="border px-4 py-2">{cust_mob_no}</td>  
                               <td className="border px-4 py-2">
-                                <Link tabIndex="1" className="px-4 py-2 text-sm bg-green-300 rounded"href={route("bill.edit",bill_id)}> Edit
+                                <Link  tabIndex="1"  
+                                         className="px-4 py-2 text-sm text-red bg-blue-500 rounded" href={route("bill.edit",bill_id)}> Edit
                                 </Link>
+                                </td>
+                                <td className="border px-4 py-2">
                                 <button tabIndex="-1" id={bill_id}  type="button"
                                           className="mx-1 px-4 py-2 text-sm text-white bg-red-500 rounded" onClick={destroy}>Delete</button>
                               </td>  

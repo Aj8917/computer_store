@@ -10,21 +10,24 @@ use Illuminate\Support\Facades\DB;
 class Bills extends Model
 {
     use HasFactory;
-    protected $fillabel=['stock_id','price','quantity','cust_mob_no'];
+   
+    protected $fillable = ['bill_no', 'cust_name', 'cust_mob_no', 'stock_id', 'quantity', 'price'];
+
 
     public function Stock()
     {
         return $this->belongsTo(Stocks::class,'stock_id','id');
     }
-    public function MobleExists($mobile_no) //to search the customer exists or not
+   
+   
+    public static function MobleExists($mobile_no)
     {
-        $cust=Customers::where('mob_no',$mobile);
-        if($cust)
-        {
-            return true;
-        }
-            return false;
+        $cust = Customers::where('mob_no', $mobile_no)->first();
+        return $cust ? true : false;
     }
+    
+
+    
     public static  function get_all()
     {
         $data=DB::table('bills')
@@ -37,7 +40,7 @@ class Bills extends Model
     {
        // return Stocks::all();
        $data=DB::table('Stocks')
-               ->select('id','item_name')
+               ->select('id','item_name','price')
                ->get();
                return $data;
     }

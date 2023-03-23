@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Bills;
+use App\Models\Customers;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class InvoiceController extends Controller
 {
@@ -35,7 +38,47 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate input 
+        //print_r($request->all());die();
+        Validator::make($request->all(),
+                    [
+                        'cust_name'=>['required','alpha'],
+                        'quantity'=> ['required','numeric'],
+                        'stock_id'=>['required'],
+                        'cust_mob_no'=> ['required','numeric'],
+                    ]
+                    )->validate();
+
+        
+      
+        //create bill no 
+
+        $prefix = 'BILL';
+        $unique_id = uniqid();
+        $date = date('YmdHis');
+        $billNumber = $prefix . '_' . $unique_id . '_' . $date;
+        // verfy mobile number and add user if not exists 
+        $cust_exists=Bills::MobleExists($request->cust_mob_no);
+        if(!$cust_exists)
+        {
+            Customers::create([
+                'cust_name' => $request->cust_name,
+                'mob_no' => $request->cust_mob_no,
+            ]);
+        }
+
+        //store to bill table 
+        $bill = new Bills([
+            'bill_no' => $billNumber,
+            'cust_name' => $request->cust_name,
+            'cust_mob_no' => $request->cust_mob_no,
+            'stock_id' => $request->stock_id,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+        ]);
+        //print_r($request->all());die();
+        $bill->save();
+        return redirect()->route('bills');
     }
 
     /**
